@@ -10,6 +10,9 @@ import org.springframework.data.domain.Pageable;
 import services.TaskService;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+import java.util.Map;
+
 //@RestController tambem garante que os metodos retornem JSON ou outro body automaticamente.
 @RestController // Define a classe como controller, Dizendo ao SPRING que classe vai receber requisicoes HTTP
 @RequestMapping("/tasks")
@@ -52,6 +55,14 @@ public class TaskController {
     @GetMapping
     public Page<TasksResponseDTO> list(Pageable pageable){
         return service.list(pageable);
+    }
+
+    @GetMapping("/tasks")
+    public List<Map<String, Object>> getTasks() {
+        return List.of(
+                Map.of("id", 1, "name", "Tarefa de teste"),
+                Map.of("id", 2, "name", "Outra tarefa")
+        );
     }
 
 
