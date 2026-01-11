@@ -2,6 +2,9 @@ package services;
 import dtos.TasksRequestsDTO;
 import dtos.TasksResponseDTO;
 import interfaces.TasksRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import tasks.Task;
 import enums.TasksStats;
@@ -35,7 +38,18 @@ public class TaskService {
                 saved.getPriority(),
                 saved.getDueDate()
         );
+    }
 
+    //Metodos para listar as tarefas listadas
+    public Page<TasksResponseDTO> list(Pageable pageable){
+        return repository.findAll(pageable)
+                .map(task -> new TasksResponseDTO(
+                        task.getId(),
+                        task.getTittle(),
+                        task.getStats(),
+                        task.getPriority(),
+                        task.getDueDate()
+                ));
     }
 }
 

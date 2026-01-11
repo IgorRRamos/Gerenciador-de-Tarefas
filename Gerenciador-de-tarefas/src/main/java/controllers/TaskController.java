@@ -1,13 +1,14 @@
 package controllers;
-import dtos.TasksRequestsDTO;
 import dtos.TasksResponseDTO;
+import dtos.TasksRequestsDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import services.TaskService;
+import org.springframework.web.bind.annotation.GetMapping;
 
 //@RestController tambem garante que os metodos retornem JSON ou outro body automaticamente.
 @RestController // Define a classe como controller, Dizendo ao SPRING que classe vai receber requisicoes HTTP
@@ -46,5 +47,17 @@ public class TaskController {
      @Valid -> ativa a volidaãcao automatica referente ao @NotNull e @NotBlank no nosso TasksResponseDTO se algum campo
      estiver incorreto ele dispara uma resposta 400 sem entrar no metodo.
      */
+
+    //Metodo para  o SPRING ler os parametros da URL constroi automaticamente  o Pageable
+    @GetMapping
+    public Page<TasksResponseDTO> list(Pageable pageable){
+        return service.list(pageable);
+    }
+
+
+
+
+
+
 
 }

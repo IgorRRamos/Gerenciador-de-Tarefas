@@ -2,7 +2,6 @@ package tasks;
 import enums.Priority;
 import enums.TasksStats;
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -85,4 +84,6 @@ public class Task {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+
 }

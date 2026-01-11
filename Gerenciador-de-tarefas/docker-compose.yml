@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: tasks
+      POSTGRES_PASSWORD: postgres
+
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
