@@ -1,15 +1,14 @@
-# Usa o JDK 17 oficial da Eclipse Temurin (funciona no Docker Hub)
-FROM eclipse-temurin:17-jdk
+FROM eclipse-temurin:17-jdk-alpine
+#Imagem base com o JAVA
 
+WORKDIR /app
+#Diretorio de trabalho dentro do container
 
-# Copia o JAR gerado pelo Maven
 COPY target/*.jar app.jar
-
-WORKDIR app.jar
-
-RUN mvn clean install
+#Copia o jar gerado para o container
 
 EXPOSE 8080
-# Roda a aplicação
-CMD ["java", "-jar", "/app.jar"]
+#Expoe a porta 8080
 
+ENTRYPOINT ["java", "-jar", "app.jar"]
+#Comando para rodar a aplicação

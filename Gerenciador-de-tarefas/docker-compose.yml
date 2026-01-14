@@ -1,28 +1,82 @@
-version: "3.9"  # ou qualquer versão compatível
+#Serviço de banco de dados
 services:
   db:
-    image: postgres
+    #Imagem oficial do postgresSQL na versao 16
+    image: postgres:16
+
+    #Definindo o nome do container
+    container_name: tarefas-db
+
+    #Reinicia automaticamente se o container cair
+    restart: always
+
+    #As variaveis de ambiente do postgres
     environment:
-      POSTGRES_DB: tasks
-      POSTGRES_PASSWORD: postgres
+      #Define o nome do DB
+      POSTGRES_DB: taskdb
+
+      #Define o usuario do DB
+      POSTGRES_USERNAME: taskuser
+
+      #Define a senha do usuario
+      POSTGRES_PASSWORD: taskpass
+
+    #Para mapear a porta do container para a maquina local
+    #Porta_local:Porta_container
     ports:
       - "5433:5432"
 
+    #Volumes para persistir no banco de dados para nãao perder se reiniciar o container
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U taskuser"]
+      interval: 5s
+      retries: 5
+
+  #Servico de aplicacao da API
   api:
-    build: .
+
+    #Constroi a imagem localmente
+    build:
+      context: . #Usar o diretorio atual
+      dockerfile: Dockerfile
+
+    #Imagem da aplicacao spring boot
+    image: task-api
+
+    #nome fixo do container da API
+    container_name: task_api
+
+    #Garante que o banco suba antes da aplicacao
+    depends_on:
+        db:
+          condition: service_healthy
+
+    #Expoe a porta da aplicacao para a porta do container
     ports:
       - "8080:8080"
-    depends_on:
-      - db
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/tasks
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
 
-  pgadmin:
-    image: dpage/pgadmin4
+    #Variaveis de ambiente passadas para o spring boot
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "5050:80"
+
+      #URL de conexao com o DB, IMPORTANTE: o host é "db", nome de serviço, e nãao localhost
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/taskdb
+
+      #Usuario do banco
+      SPRING_DATASOURCE_USERNAME: taskuser
+
+      #Senha do banco
+      SPRING_DATASOURCE_PASSWORD: taskpass
+
+      #Cria e atualiza tabelas automaticamente
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+    #Para reiniciar a API automaticamente caso cair
+    restart: always
+
+#Definicao dos volumes
+volumes:
+
+  #Volume mapeado usado pelo postgres
+  postgres_data:

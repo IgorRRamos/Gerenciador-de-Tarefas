@@ -1,4 +1,4 @@
-package controllers;
+package com.example.demo.controllers;
 import dtos.TasksResponseDTO;
 import dtos.TasksRequestsDTO;
 import jakarta.validation.Valid;
@@ -31,6 +31,7 @@ public class TaskController {
         this.service = service;
     }
 
+    @PostMapping
     public ResponseEntity<TasksResponseDTO> create(@RequestBody @Valid TasksRequestsDTO dto){
         TasksResponseDTO response = service.create(dto); // Chama o service o serice faz a logica de negocio
         //Cria a entidade taks, define os campos, salva no banco via TaskRepository e retorna um DTO  de resposta
@@ -57,15 +58,15 @@ public class TaskController {
         return service.list(pageable);
     }
 
-    @GetMapping("/tasks")
+
+
+    @GetMapping("/all")
     public List<Map<String, Object>> getTasks() {
         return List.of(
                 Map.of("id", 1, "name", "Tarefa de teste"),
                 Map.of("id", 2, "name", "Outra tarefa")
         );
     }
-
-
 
 
 
