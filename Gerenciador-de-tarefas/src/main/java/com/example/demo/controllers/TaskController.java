@@ -1,13 +1,13 @@
 package com.example.demo.controllers;
-import dtos.TasksResponseDTO;
-import dtos.TasksRequestsDTO;
+import com.example.demo.dtos.TasksResponseDTO;
+import com.example.demo.dtos.TasksRequestsDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import services.TaskService;
+import com.example.demo.services.TaskService;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;

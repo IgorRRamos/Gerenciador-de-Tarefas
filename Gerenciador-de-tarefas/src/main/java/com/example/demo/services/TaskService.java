@@ -1,13 +1,13 @@
-package services;
-import dtos.TasksRequestsDTO;
-import dtos.TasksResponseDTO;
-import interfaces.TasksRepository;
+package com.example.demo.services;
+import com.example.demo.dtos.TasksRequestsDTO;
+import com.example.demo.dtos.TasksResponseDTO;
+import com.example.demo.interfaces.TasksRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
-import tasks.Task;
-import enums.TasksStats;
+import com.example.demo.model.tasks.Task;
+import com.example.demo.enums.TasksStats;
 import java.time.LocalDateTime;
 
 @Service //Marca a classe como Servico/Negocio da aplicacao.

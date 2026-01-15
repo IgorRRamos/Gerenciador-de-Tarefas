@@ -1,6 +1,6 @@
-package tasks;
-import enums.Priority;
-import enums.TasksStats;
+package com.example.demo.model.tasks;
+import com.example.demo.enums.Priority;
+import com.example.demo.enums.TasksStats;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

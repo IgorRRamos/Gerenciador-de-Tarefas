@@ -1,6 +1,6 @@
-package dtos;
-import enums.Priority;
-import enums.TasksStats;
+package com.example.demo.dtos;
+import com.example.demo.enums.Priority;
+import com.example.demo.enums.TasksStats;
 import java.time.LocalDate;
 
 public record TasksResponseDTO(Long id, String tittle, TasksStats stats, Priority priority, LocalDate dueDate) {

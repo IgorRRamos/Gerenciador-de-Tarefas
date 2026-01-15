@@ -1,6 +1,6 @@
-package dtos;
+package com.example.demo.dtos;
 
-import enums.Priority;
+import com.example.demo.enums.Priority;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
